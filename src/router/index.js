@@ -7,17 +7,34 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'home',
+    component: Home,
+    // 起到一个重定向的作用
+    redirect: 'recommend',
+    children: [
+      {
+        path: 'recommend',
+        name: 'recommend',
+        component: () => import(/* webpackChunkName: "recommend" */ '../views/Recommend.vue')
+      },
+      {
+        path: 'rank',
+        name: 'rank',
+        component: () => import(/* webpackChunkName: "rank" */ '../views/Rank.vue')
+      },
+      {
+        path: 'singers',
+        name: 'singers',
+        component: () => import(/* webpackChunkName: "singers" */ '../views/Singers.vue')
+      },
+     
+    ]
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path:'**',
+    redirect:'/recommend'
   }
+
 ]
 
 const router = new VueRouter({
