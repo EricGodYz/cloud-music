@@ -15,7 +15,14 @@ const routes = [
       {
         path: 'recommend',
         name: 'recommend',
-        component: () => import(/* webpackChunkName: "recommend" */ '../views/Recommend.vue')
+        component: () => import(/* webpackChunkName: "recommend" */ '../views/Recommend.vue'),
+        children:[
+          {
+            path:':id',
+            name:'recommend-list',
+            component: () => import(/* webpackChunkName: "recommend" */ '../views/RecommendList'),
+          }
+        ]
       },
       {
         path: 'rank',

@@ -1,15 +1,20 @@
 <template>
+<div>
+
+
   <div id="recommend" class="page" :class="{active:showBgColor}">
     <app-scroll class="content" :change="handleScrollChange">
       <div class="wrap">
         <!-- 展示加载的状态 -->
-        <p>{{loading}}</p>
+        <!-- <p>{{loading}}</p> -->
         <banner-list :data="banner" />
         <recommend-list :data="recommend" />
       </div>
     </app-scroll>
     
   </div>
+  <router-view/>
+</div>
 </template>
 
 <script>

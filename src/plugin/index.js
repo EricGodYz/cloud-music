@@ -1,5 +1,6 @@
 import AppSroll from '../components/common/app-scroll.vue';
 import VueLazyload from 'vue-lazyload'
+import InfiniteScroll from '../components/common/infinite-scroll'
 export default {
     // 定义公共组件导入的地方
     install(Vue) {
@@ -10,10 +11,11 @@ export default {
             error: '/img/music.png',
             loading: '/img/music.png',
             attempt: 1
-          })
+        })
 
         // 滚动组件的注册
         Vue.component("app-scroll", AppSroll);
+        Vue.component("infinite-scroll", InfiniteScroll);
 
 
     }

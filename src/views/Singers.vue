@@ -2,19 +2,19 @@
   <div id="singers" class="page">
     <!-- 歌手的类型 -->
 
-    <singers-list title="分类(默认热门)" :data="menu_type"  v-model="select_type" />
-    <singers-list title="首字母" :data="menu_letter"  v-model="select_letter" />
-
-
-
-    <ul>
-      <li class="singer-item" v-for="item in data" :key="item.id">
-        <img v-lazy="item.picUrl" alt="">
-        <h3>{{item.name}}</h3>
-
-      </li>
-    </ul>
-
+    <singers-list title="分类(默认热门)" :data="menu_type" v-model="select_type" />
+    <singers-list title="首字母" :data="menu_letter" v-model="select_letter" />
+   
+    <infinite-scroll  class="content" ref="scroll"
+      @pull-down ="handlePullDown" @pull-up ="handlePullUp">
+      <ul>
+        <li class="singer-item" v-for="item in data" :key="item.id">
+          <img v-lazy="item.picUrl" alt />
+          <h3>{{item.name}}</h3>
+          
+        </li>
+      </ul>
+    </infinite-scroll>
   </div>
 </template>
 
@@ -39,42 +39,61 @@ export default {
   },
   computed: {
     ...mapState({
-      // singer:(state) => {console.log(state);},
       data: (state) => state.singers.singers,
+      // loading:(state) => {console.log(state);},   //调用的时候需要展示出来loading才可以进行打印
+      loading:(state) =>state.singers.loading,
     }),
   },
   watch: {
-    select_type(){
+    select_type() {
+      // console.log('监听女歌手');
       this.requestData();
+      const unwatch = this.$watch('loading',(newVal)=>{
+        if(!newVal){
+          this.$refs.scroll.scrollToTop();
+          
+
+          // 移除监听事件，否则会进行叠加，必须进行移除
+          unwatch();
+        }
+      })
+
     },
-    select_letter(){
+    select_letter() {
       this.requestData();
-    }
+      const unwatch = this.$watch('loading',(newVal)=>{
+        if(!newVal){
+          this.$refs.scroll.scrollToTop();
+         
+
+          // 移除监听事件，否则会进行叠加，必须进行移除
+          unwatch();
+        }
+      })
+    },
   },
 
   // 请求数据被封装成函数方便调用
 
   methods: {
-    requestData() {
+    requestData(isLoadMore ) {
       //进行参数的处理
       let type = -1;
       let area = -1;
       let initial = -1;
-     
-
 
       //当歌手列表的数据被选中
-      if(this.select_type >= 0){
+      if (this.select_type >= 0) {
         const item = this.menu_type[this.select_type];
-        type = item.typeID,
-        area = item.areaID
+        type = item.typeID;
+        area = item.areaIDs;
       }
-      if(this.select_letter >=0){
+      if (this.select_letter >= 0) {
         const item = this.menu_letter[this.select_letter];
-        initial = item.id; 
+        initial = item.id;
       }
-      
-      const offset = 0;
+
+      const offset = isLoadMore ? this.data.length : 0;
       const limit = 30;
       // 当字母列表的数据被选中
       //发送请求数据
@@ -85,7 +104,39 @@ export default {
         offset,
         limit,
       });
+
+     
     },
+
+    
+    
+  
+
+    handlePullDown(){
+      this.requestData();
+      const unwatch = this.$watch('loading',(newVal)=>{
+        if(!newVal){
+          this.$refs.scroll.endPullDown();
+          console.log('执行wacth');
+
+          // 移除监听事件，否则会进行叠加，必须进行移除
+          unwatch();
+        }
+      })
+
+    },
+    // 上拉加载更多
+    handlePullUp(){
+      this.requestData(true);
+      const unwatch = this.$watch('loading',(newVal)=>{
+        if(!newVal){
+          // console.log(this.$refs.scroll);
+          this.$refs.scroll.endPullUp();
+          // 移除监听事件，否则会进行叠加，必须进行移除
+          unwatch();
+        }
+      })
+    }
   },
 
   created() {

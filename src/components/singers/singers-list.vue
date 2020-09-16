@@ -38,12 +38,11 @@ export default {
 
       this.$emit("input", index);
       console.log(index);
-    
     },
   },
   mounted() {
     this.wrapWidth = this.$refs.wrap.offsetWidth;
-    console.log(this.wrapWidth);
+    // console.log(this.wrapWidth);
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="recommend-list">
     <h3 class="tit">收藏歌单</h3>
     <ul class="list">
-      <li v-for="item in data" :key="item.id" class="list-item">
+      <li v-for="item in data" :key="item.id" class="list-item"  @click="goActionMusic(item.id)">
         <div class="list-show">
           <img v-lazy="item.picUrl" alt  class="img" />
           <p>cover</p>
@@ -22,6 +22,15 @@ export default {
   // 接受来自父组件的数据
   props: {
     data: Array,
+  },
+  methods: {
+    goActionMusic(id){
+      // console.log(item);
+      // this.$router.push('recommend-list',);
+  console.log(id);
+      this.$router.push({name:'recommend-list',params:{id}});
+
+    }
   },
   // 局部过滤器的使用 
   //这个相当于自定义过滤器   
