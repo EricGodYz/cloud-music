@@ -1,50 +1,82 @@
 <template>
-  <div id="singersList">
-      <ul class="group">
-          <h2>分类(默认热门)</h2>
-          <li>华语男</li>
-          <li>华语女</li>
-          <li>华语组合</li>
-          <li>欧美男</li>
-          <li>欧美女</li>
-      </ul>
-      <ul class="letter">
-
-      </ul>
-      <ul class="singerlist">
-          <li v-for="item in data" :key="item.id" class="singer-item">
-              <img :src="item.img1v1Url" alt="singer-list">
-              <p>{{item.name}}</p>
-          </li>
-      </ul>
-  </div>
+  <app-scroll :scrollX="true" :scrollY="false" :width="wrapWidth">
+    <div class="menu-wrap" ref="wrap">
+      <span class="title">{{title}}</span>
+      <i>:</i>
+      <span
+        class="item"
+        v-for="(item,index) in data"
+        :key="item.id"
+        :class="{active: value === index}"
+        @click="changeAction(index)"
+      >{{item.label}}</span>
+    </div>
+  </app-scroll>
 </template>
 
 <script>
 export default {
-    props:{
-        // 接受来自父组件的数据
-        data:Array,
-    }
+  props: {
+    title: String,
+    // 接受来自父组件的数据
+    data: Array,
+    value: {
+      type: Number,
+      default: 1,
+    },
+  },
+  data() {
+    return {
+      wrapWidth: 0,
+    };
+  },
 
-}
+  // 处理列表的点击事件
+  methods: {
+    changeAction(index) {
+      // 触发input，实现受控的组件
+
+      this.$emit("input", index);
+      console.log(index);
+    
+    },
+  },
+  mounted() {
+    this.wrapWidth = this.$refs.wrap.offsetWidth;
+    console.log(this.wrapWidth);
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/global-style.scss";
 
-#singersList{
-    width: 100%;
-    .singerlist{
-        width: 100%;
-        .singer-item{
-            width: 60%;
-            img{
-                width: 100%;
-                height: 100px;
-            }
-        }
+.menu-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  width: max-content;
+  height: 26px;
+  font-size: $font-size-s;
+  padding: 0 6px;
+  box-sizing: border-box;
+  span {
+    flex: 0 0 auto;
+    padding: 2px 6px;
+    &:first-of-type {
+      color: $font-color-desc;
     }
+    &.active {
+      border: 1px solid $theme-color;
+      border-radius: 8px;
+      color: $theme-color;
+    }
+  }
+  i {
+    flex: 0 0 auto;
+    margin: 0 4px;
+    color: $font-color-desc;
+  }
 }
-
 </style>

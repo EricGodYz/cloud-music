@@ -1,6 +1,6 @@
 <template>
   <div class="scroll-view" ref="scroll">
-    <div class="scroll-wrap">
+    <div class="scroll-wrap" :style="{width:wrapWidth}">
       <!-- 声明插槽,向里面添加内容 -->
       <slot />
     </div>
@@ -11,7 +11,30 @@
 // 公共组件scroll的使用
 export default {
   props:{
-      change:Function
+      change:Function,
+      scrollX:{
+        type:Boolean,
+        default:false,
+      },
+      scrollY:{
+        type:Boolean,
+        default:true,
+      },
+      // 接受滚动视图的宽度
+      width:{
+        type:[String,Number],
+        default:'100%'
+      }
+  },
+  computed: {
+    // 计算最终的宽度的样式
+    wrapWidth(){
+      if(typeof this.width === 'string'){
+        return this.width;
+      }else{
+        return this.width + 'px';
+      }
+    }
   },
   mounted() {
     // 声明插件的使用位置
@@ -19,6 +42,8 @@ export default {
       tap: true,
       click: true,
       probeType: 3,
+       scrollX: this.scrollX,
+      scrollY: this.scrollY
     });
     // 当插件变化的时候就进行更新
     scroll.on("beforeScrollStart", () => {

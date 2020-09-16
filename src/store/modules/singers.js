@@ -16,19 +16,22 @@ export default{
     mutations:{
 
         // 请求歌手的数据
-        setSingers(state,payload){
-            state.singers = payload;
+        setSingers(state,{data}){
+            state.singers = data;
 
         }
 
     },
     actions:{
-        async requestSingersList(context){
-
-            const {data:{artists}} = await http.get(SINGERS_LIST_API);
-            console.log(artists);
-            const newData = artists.map(({id,name,img1v1Url})=>({id,name,img1v1Url}))
-            context.commit('setSingers',newData);
+        async requestSingersList(context,payload){
+            const {data:{artists}} = await http.get(SINGERS_LIST_API,payload);
+            // console.log(artists);
+            const result = artists.map(item =>({
+                id:item.id,
+                name:item.name,
+                picUrl:item.picUrl + '?param=200x200',
+            }));
+            context.commit('setSingers',{data:result});
             
         }
 
