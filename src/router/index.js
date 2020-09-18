@@ -20,14 +20,21 @@ const routes = [
           {
             path:':id',
             name:'recommend-list',
-            component: () => import(/* webpackChunkName: "recommend" */ '../views/RecommendList'),
+            component: () => import(/* webpackChunkName: "song-list" */ '../views/SongList'),
           }
         ]
       },
       {
         path: 'rank',
         name: 'rank',
-        component: () => import(/* webpackChunkName: "rank" */ '../views/Rank.vue')
+        component: () => import(/* webpackChunkName: "rank" */ '../views/Rank.vue'),
+        children:[
+          {
+            path:':id',
+            name:'rank-list',
+            component: () => import(/* webpackChunkName: "song-list" */ '../views/SongList'),
+          }
+        ]
       },
       {
         path: 'singers',

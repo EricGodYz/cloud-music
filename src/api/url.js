@@ -19,4 +19,4 @@ export const RANK_LIST_API = '/toplist/detail';
 
 
 // song/detail 接口获取所有歌曲的详情
-export const RECOMMEND_LIST_API_Detail = '/playlist/detail';
+export const SONG_LIST_API_Detail = '/playlist/detail';

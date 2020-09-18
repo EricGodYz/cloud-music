@@ -11,8 +11,7 @@ export default {
         recommend: [],
         bannerState: false,
         recommendState: false,
-        recommendList: {},
-        detailLoading: false,
+       
     },
     getters: {
         loading(state) {
@@ -28,7 +27,7 @@ export default {
         },
         // 设置bannerLoading的状态
         setBannerState(state, payload) {
-            console.log(state);
+            // console.log(state);
             state.bannerState = payload;
         },
 
@@ -42,12 +41,7 @@ export default {
             state.recommendState = payload;
 
         },
-        setRecommendListDetail(state, payload) {
-            state.recommendList = payload;
-        },
-        setDetailLoading(state, payload) {
-            state.detailLoading = payload;
-        }
+       
     },
 
     actions: {
@@ -59,7 +53,7 @@ export default {
             const newData = banners.map((item) => item.imageUrl);
             context.commit('setBanner', newData);
             // 当数据请求加载完毕
-            console.log(newData);
+            // console.log(newData);
             context.commit('setBannerState', false);
 
 
@@ -105,49 +99,6 @@ export default {
 
         },
 
-        // 请求歌单详情数据
-        async requestRecommendListDetail(context, payload) {
-            context.commit('setDetailLoading', true);
-            const { data: { playlist } } = await http.get(RECOMMEND_LIST_API_Detail, payload);
-            // console.log(playlist);
-            const listDetail = {
-                // 歌单的名字
-                name: playlist.name,
-                // 歌单的图片
-                coverImgUrl: playlist.coverImgUrl,
-                // 歌单的收藏量
-                subscribedCount: playlist.subscribedCount,
-                // 创建者的名字
-                creator: {
-                    // 创建者的名字
-                    nickname: playlist.creator.nickname,
-                    // 创建者的图片
-                    avatarUrl: playlist.creator.avatarUrl,
-                },
-
-
-                tracks: playlist.tracks.map((item) => ({
-                    // 歌曲的id
-                    id: item.id,
-                    // 歌曲的名字
-                    name: item.name,
-                    // 歌手
-                    ar: item.ar.map((arItem) => (arItem.name)),
-                    // 专辑
-                    al: {
-                        // 专辑
-                        name: item.al.name,
-                        picUrl: item.al.picUrl,
-                    }
-                })),
-
-
-
-            };
-            // console.log(listDetail.creator.avatarUrl);
-
-            context.commit("setRecommendListDetail", listDetail);
-            context.commit('setDetailLoading', false);
-        }
+       
     }
 }

@@ -20,9 +20,7 @@ export default {
       rank:(state)=>state.rank.rankList,
     })
   },
-
   created() {
-    
     this.$store.dispatch('rank/requestRankList');
   },
 

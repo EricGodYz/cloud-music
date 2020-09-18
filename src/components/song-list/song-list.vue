@@ -4,15 +4,15 @@
       <div class="play-info">
         <span class="iconfont icon-bofang"></span>
         <span>播放全部</span>
-        <span>共({{data.length}})首</span>
+        <span>共({{detail.tracks.length}})首</span>
       </div>
       <div class="subscribe-count">
         <span class="iconfont icon-tianjia"></span>
-        <span>收藏({{count | formatter(1) }})</span>
+        <span>收藏({{detail.subscribedCount | formatter(1) }})</span>
       </div>
     </header>
     <ul class="list">
-      <li class="item" v-for="(item, index) in data" :key="item.id">
+      <li class="item" v-for="(item, index) in detail.tracks" :key="item.id">
         <div class="index">{{index+1}}</div>
         <div class="item-content">
           <h3 class="title">{{item.name}}</h3>
@@ -28,11 +28,13 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
-    props:{
-        count:Number,
-        data:Array
-    }
+   computed: {
+      ...mapState({
+      detail: (state) => state.songList.detail,
+    }),
+   },
 };
 </script>
 

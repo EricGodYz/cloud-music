@@ -183,7 +183,7 @@ export default {
       };
     });
 
-    console.log(this.menu_letter);
+    // console.log(this.menu_letter);
     //  处理完参数列表，就开始进行请求数据
     this.requestData();
   },
