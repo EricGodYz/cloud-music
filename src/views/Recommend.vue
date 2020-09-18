@@ -1,9 +1,8 @@
 <template>
+
 <div>
-
-
   <div id="recommend" class="page" :class="{active:showBgColor}">
-    <app-scroll class="content" :change="handleScrollChange">
+    <app-scroll class="content" :handleScroll="handleScrollAction">
       <div class="wrap">
         <!-- 展示加载的状态 -->
         <!-- <p>{{loading}}</p> -->
@@ -13,7 +12,12 @@
     </app-scroll>
     
   </div>
-  <router-view/>
+
+  <!-- 子页面 -->
+  <transition  enter-active-class="fly-in"  leave-active-class="fly-out">
+    <router-view/>
+  </transition>
+  
 </div>
 </template>
 
@@ -28,7 +32,7 @@ export default {
   },
   data() {
     return {
-      showBgColor: true,
+      showBgColor: false,
     };
   },
   computed: {
@@ -41,9 +45,30 @@ export default {
         loading:'recommend/loading'
     })
   },
+  watch: {
+
+    // 进行loading的加载
+    loading(newVal){
+      if(newVal){
+        this.$showLoading();
+      }else{
+        this.$hideLoading();
+      }
+    }
+  },
   methods: {
-    handleScrollChange(show){
-       this.showBgColor = show;
+    // 页面的滚动事件
+    handleScrollAction({y}){
+      //  this.showBgColor = show;   第一种方法
+      // console.log(y);
+      
+      if(y >= 0){
+        this.showBgColor = true;
+      }else{
+        this.showBgColor = false;
+      }
+      
+    
     }
   },
   created() {

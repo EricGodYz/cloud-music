@@ -14,7 +14,7 @@ const routes = [
     children: [
       {
         path: 'recommend',
-        name: 'recommend',
+        name: 'test',
         component: () => import(/* webpackChunkName: "recommend" */ '../views/Recommend.vue'),
         children:[
           {

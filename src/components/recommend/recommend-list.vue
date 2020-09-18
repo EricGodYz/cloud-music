@@ -2,9 +2,9 @@
   <div class="recommend-list">
     <h3 class="tit">收藏歌单</h3>
     <ul class="list">
-      <li v-for="item in data" :key="item.id" class="list-item"  @click="goActionMusic(item.id)">
+      <li v-for="item in data" :key="item.id" class="list-item" @click="goActionMusic(item.id)">
         <div class="list-show">
-          <img v-lazy="item.picUrl" alt  class="img" />
+          <img v-lazy="item.picUrl" alt class="img" />
           <p>cover</p>
           <p class="list-info">
             <span class="iconfont icon-headset"></span>
@@ -24,29 +24,26 @@ export default {
     data: Array,
   },
   methods: {
-    goActionMusic(id){
-      // console.log(item);
-      // this.$router.push('recommend-list',);
-  console.log(id);
-      this.$router.push({name:'recommend-list',params:{id}});
-
-    }
+    goActionMusic(id) {
+      
+      // console.log(id);
+      this.$router.push({ name: "recommend-list", params: { id } });
+    },
   },
-  // 局部过滤器的使用 
-  //这个相当于自定义过滤器   
-  filters:{
-      formatter(count){
-          if(count<10000){
-              return count;
-          }else if(count < 10000 * 10000){
-              return Math.floor(count/10000) + '万';
-          }else{
-            //    大于1亿
-            return Math.floor(count / 10000 /10000) + '亿';
-          }
-
-      }
-  }
+  // 局部过滤器的使用
+  //这个相当于自定义过滤器
+  // filters: {
+  //   formatter(count) {
+  //     if (count < 10000) {
+  //       return count;
+  //     } else if (count < 10000 * 10000) {
+  //       return Math.floor(count / 10000) + "万";
+  //     } else {
+  //       //    大于1亿
+  //       return Math.floor(count / 10000 / 10000) + "亿";
+  //     }
+  //   },
+  // },
 };
 </script>
 
@@ -82,13 +79,12 @@ export default {
   flex-wrap: wrap;
   .list-item {
     width: 32%;
-    .list-show{
+    .list-show {
       border-radius: 6px;
       overflow: hidden;
       position: relative;
       .img {
         width: 100%;
-        
       }
       .list-info {
         position: absolute;
@@ -98,20 +94,23 @@ export default {
         font-size: $font-size-s;
         display: flex;
         align-items: center;
-        .iconfont{
+        .iconfont {
           font-size: $font-size-l;
         }
       }
-      .cover{
+      .cover {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 30%;
-        background: linear-gradient(rgba(110, 110, 110, 0.4), rgba(255, 255, 255, 0));
+        background: linear-gradient(
+          rgba(110, 110, 110, 0.4),
+          rgba(255, 255, 255, 0)
+        );
       }
     }
-    .name{
+    .name {
       width: 100%;
       font-size: $font-size-s;
       font-weight: normal;

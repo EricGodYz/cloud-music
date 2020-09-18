@@ -11,7 +11,7 @@
 // 公共组件scroll的使用
 export default {
   props:{
-      change:Function,
+      handleScroll:Function,
       scrollX:{
         type:Boolean,
         default:false,
@@ -53,17 +53,18 @@ export default {
 
     // 当有scroll的的需求的时候才才有change这个改变
     // 进行scroll的监听与执行
-    this.change && scroll.on('scroll',()=>{
-        if(scroll.y >=0 ){
-            // 上滑scroll的值为true
-            // console.log(scroll.y);
-            // 子组件传递值
-            this.change(true);
-        }else{ 
-            // 下滑的scroll的值为负
-            // console.log(scroll.y);
-            this.change(false);
-        }
+    this.handleScroll && scroll.on('scroll',()=>{
+        // if(scroll.y >=0 ){
+        //     // 上滑scroll的值为true
+        //     // console.log(scroll.y);
+        //     // 子组件传递值
+        //     this.change(true);
+        // }else{ 
+        //     // 下滑的scroll的值为负
+        //     // console.log(scroll.y);
+        //     this.change(false);
+        // }
+        this.handleScroll({x:scroll.x,y:scroll.y})
     })
   },
 };

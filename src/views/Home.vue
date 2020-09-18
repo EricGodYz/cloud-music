@@ -79,12 +79,5 @@ export default {
       }
    }
 }
-.page{
-   position: absolute;
-   top: 90px;
-   left: 0;
-   width: 100%;
-   bottom: 0;
-   // background-color: lawngreen;
-}
+
 </style>
