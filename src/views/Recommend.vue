@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       showBgColor: false,
+      handleLoading:true,   //需要loading处理
     };
   },
   computed: {
@@ -45,17 +46,17 @@ export default {
         loading:'recommend/loading'
     })
   },
-  watch: {
+  // watch: {
 
-    // 进行loading的加载
-    loading(newVal){
-      if(newVal){
-        this.$showLoading();
-      }else{
-        this.$hideLoading();
-      }
-    }
-  },
+  //   // 进行loading的加载
+  //   loading(newVal){
+  //     if(newVal){
+  //       this.$showLoading();
+  //     }else{
+  //       this.$hideLoading();
+  //     }
+  //   }
+  // },
   methods: {
     // 页面的滚动事件
     handleScrollAction({y}){

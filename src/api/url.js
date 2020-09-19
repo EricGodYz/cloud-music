@@ -20,3 +20,6 @@ export const RANK_LIST_API = '/toplist/detail';
 
 // song/detail 接口获取所有歌曲的详情
 export const SONG_LIST_API_Detail = '/playlist/detail';
+
+// 调用此接口 , 传入歌手 id, 可获得歌手部分信息和热门歌曲
+export const SINGER_API_DETAIL = '/artists';

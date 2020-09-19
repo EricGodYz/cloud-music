@@ -1,20 +1,29 @@
 <template>
-  <div id="singers" class="page">
-    <!-- 歌手的类型 -->
+  <div>
+    <div id="singers" class="page">
+      <!-- 歌手的类型 -->
+      <singers-list title="分类(默认热门)" :data="menu_type" v-model="select_type" />
+      <singers-list title="首字母" :data="menu_letter" v-model="select_letter" />
 
-    <singers-list title="分类(默认热门)" :data="menu_type" v-model="select_type" />
-    <singers-list title="首字母" :data="menu_letter" v-model="select_letter" />
-   
-    <infinite-scroll  class="content" ref="scroll"
-      @pull-down ="handlePullDown" @pull-up ="handlePullUp">
-      <ul>
-        <li class="singer-item" v-for="item in data" :key="item.id">
-          <img v-lazy="item.picUrl" alt />
-          <h3>{{item.name}}</h3>
-          
-        </li>
-      </ul>
-    </infinite-scroll>
+      <infinite-scroll
+        class="content"
+        ref="scroll"
+        @pull-down="handlePullDown"
+        @pull-up="handlePullUp"
+      >
+        <ul>
+          <li class="singer-item" v-for="item in data" :key="item.id" @click="goSingerPageAction(item.id)">
+            <img v-lazy="item.picUrl" alt />
+            <h3>{{item.name}}</h3>
+          </li>
+        </ul>
+      </infinite-scroll>
+    </div>
+
+    <!-- 子页面 -->
+    <transition enter-active-class="fly-in" leave-active-class="fly-out">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -35,48 +44,46 @@ export default {
       select_type: -1,
       // 歌曲字母的选择 默认为-1
       select_letter: -1,
+      // handleLoading:true,      //会影响上拉加载的使用
     };
   },
   computed: {
     ...mapState({
       data: (state) => state.singers.singers,
       // loading:(state) => {console.log(state);},   //调用的时候需要展示出来loading才可以进行打印
-      loading:(state) =>state.singers.loading,
+      loading: (state) => state.singers.loading,
     }),
   },
   watch: {
     select_type() {
       // console.log('监听女歌手');
       this.requestData();
-      const unwatch = this.$watch('loading',(newVal)=>{
-        if(!newVal){
+      const unwatch = this.$watch("loading", (newVal) => {
+        if (!newVal) {
           this.$refs.scroll.scrollToTop();
-          
 
           // 移除监听事件，否则会进行叠加，必须进行移除
           unwatch();
         }
-      })
-
+      });
     },
     select_letter() {
       this.requestData();
-      const unwatch = this.$watch('loading',(newVal)=>{
-        if(!newVal){
+      const unwatch = this.$watch("loading", (newVal) => {
+        if (!newVal) {
           this.$refs.scroll.scrollToTop();
-         
 
           // 移除监听事件，否则会进行叠加，必须进行移除
           unwatch();
         }
-      })
+      });
     },
   },
 
   // 请求数据被封装成函数方便调用
 
   methods: {
-    requestData(isLoadMore ) {
+    requestData(isLoadMore) {
       //进行参数的处理
       let type = -1;
       let area = -1;
@@ -104,38 +111,36 @@ export default {
         offset,
         limit,
       });
-
-     
     },
 
-    
-    
-  
-
-    handlePullDown(){
+    handlePullDown() {
       this.requestData();
-      const unwatch = this.$watch('loading',(newVal)=>{
-        if(!newVal){
+      const unwatch = this.$watch("loading", (newVal) => {
+        if (!newVal) {
           this.$refs.scroll.endPullDown();
-          console.log('执行wacth');
+          console.log("执行wacth");
 
           // 移除监听事件，否则会进行叠加，必须进行移除
           unwatch();
         }
-      })
-
+      });
     },
     // 上拉加载更多
-    handlePullUp(){
+    handlePullUp() {
       this.requestData(true);
-      const unwatch = this.$watch('loading',(newVal)=>{
-        if(!newVal){
+      const unwatch = this.$watch("loading", (newVal) => {
+        if (!newVal) {
           // console.log(this.$refs.scroll);
           this.$refs.scroll.endPullUp();
           // 移除监听事件，否则会进行叠加，必须进行移除
           unwatch();
         }
-      })
+      });
+    },
+
+    // 进入歌手详情页面
+    goSingerPageAction(id){
+      this.$router.push({name:'singer',params:{id}});
     }
   },
 

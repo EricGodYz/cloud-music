@@ -51,7 +51,10 @@ export default {
             // console.log(payload.offset);
             // 请求完数据loading需要设置loading的值为false,关闭下拉加载或者上拉加载
 
-            context.commit('setLoading', false);
+            setTimeout(()=>{
+                context.commit('setLoading', false);
+            },2000)
+           
 
 
         }

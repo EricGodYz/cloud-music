@@ -25,6 +25,7 @@ export default {
     return {
       opacity: 0,
       // showTitle:false,
+       handleLoading:true,   //需要loading处理
     };
   },
   computed: {
@@ -33,16 +34,16 @@ export default {
     }),
    
   },
-  watch: {
-    // loadingt图标的加载事件
-    loading(newVal) {
-      if (newVal) {
-        this.$showLoading();
-      } else {
-        this.$hideLoading();
-      }
-    },
-  },
+  // watch: {
+  //   // loadingt图标的加载事件
+  //   loading(newVal) {
+  //     if (newVal) {
+  //       this.$showLoading();
+  //     } else {
+  //       this.$hideLoading();
+  //     }
+  //   },
+  // },
   methods: {
 
     // 滚动事件

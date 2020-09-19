@@ -59,8 +59,24 @@ export default {
 
           // 进行全局的注入
           Vue.mixin({
-            mounted() {
-              this.$showLoading = () => {
+            watch: {
+              loading(newVal){
+                if(this.handleLoading){
+                  // 需要展示loading
+                  if(newVal){
+                    this.$showLoading();
+                    console.log('show');
+                  }else{
+                    this.$hideLoading();
+                    console.log('hide');
+                  }
+                }
+                
+                
+              }
+            },
+            methods: {
+              $showLoading(){
                 if (this.$isLoading) {
                   return;
                 }
@@ -77,8 +93,8 @@ export default {
                 this._loadingCom.$mount("#modal");
       
                 this.$isLoading = true;
-              };
-              this.$hideLoading = () => {
+              },
+              $hideLoading(){
                 if (this.$isLoading) {
                   // 销毁loading
                   this._loadingCom.$destroy();
@@ -86,8 +102,9 @@ export default {
                   document.documentElement.removeChild(this._modalDOM);
                   this.$isLoading = false;
                 }
-              };
+              }
             },
+         
           });
 
     }
