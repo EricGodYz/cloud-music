@@ -18,7 +18,8 @@ html,body{
    background-color:#f2f3f4 ;
    // background-color: lawngreen;
    &.subPage{
-     top:0
+     top:0;
+     z-index:100
    }
 }
 @keyframes fly-in {

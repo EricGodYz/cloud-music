@@ -4,7 +4,7 @@
     <app-scroll class="content" v-if="!loading" :handleScroll="handleScrollAction">
       <!--两个子组件自己去仓库拿数据 -->
       <list-detail-top/>
-      <song-list />
+      <song-list :data="detail.tracks"  :count="detail.subscribedCount"/>
     </app-scroll>
     <div class="content" v-else></div>
   </div>
@@ -12,7 +12,7 @@
 
 <script>
 import { mapState } from "vuex";
-import SongList from "../components/song-list/song-list";
+import SongList from "../components/common/song-list";
 import listDetailTop from '../components/song-list/list-detail-top';
 import ListDetailHeader from '../components/song-list/list-detail-header';
 export default {
@@ -30,6 +30,7 @@ export default {
   },
   computed: {
     ...mapState({
+      detail:(state) => state.songList.detail,
       loading:(state) => state.songList.loading,
     }),
    

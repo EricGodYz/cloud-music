@@ -5,7 +5,8 @@ export default {
     state: {
         singerImage:'',
         hotSongs:[],
-        loading:false
+        loading:false,
+        name:''
 
     },
     mutations: {
@@ -15,6 +16,7 @@ export default {
         setSongDetail(state,payload){
             state.singerImage = payload.picUrl;
             state.hotSongs = payload.hotSongs;
+            state.name = payload.name;
         }
 
     },
@@ -37,8 +39,9 @@ export default {
                 }
             }));
             const picUrl = data.artist.picUrl;
-            // console.log(picUrl);
-            context.commit('setSongDetail',{picUrl,hotSongs});
+            // console.log(hotSongs);
+            console.log(data.artist.name);
+            context.commit('setSongDetail',{picUrl,hotSongs,name:data.artist.name});
             
             context.commit('setLoading',false);
            
